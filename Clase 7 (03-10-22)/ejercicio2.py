@@ -11,4 +11,4 @@ for fila in matriz_A:
         count += 1
     print (a, b)
     a, b, count = 0, 0, 0
-    count2 += 1 
+    count2 += 1
