@@ -1,6 +1,3 @@
-from unicodedata import category, name
-
-
 products = {
     "mobiles": {
         "Apple": [
@@ -99,9 +96,17 @@ products = {
 }
 option = ''
 category1 = ''
+selected_product = {}
+shopping_cart = []
+data_keys = ['Name', 'ID']
+data = {}
+client_data = []
+checkout =  ''
+total = 0
+
 while option != '3':
 
-    option = input('\nPlease enter an option:\n 1. Show inventary \n 2. Register order\n 3. Exit\n -> ')
+    option = input('\nPlease enter an option:\n 1. Show inventory \n 2. Register order\n 3. Exit\n -> ')
     
     if option == '1':
         categories = {'1':"mobiles", '2':"laptops"}
@@ -109,10 +114,54 @@ while option != '3':
         for type, brands in products.items():
             if type == categories.get(category1):
                 for brand, product_list in brands.items():
-                    print(brand)
+                    print(brand, ':')
                     for product in product_list:
                         id = product.get('id')
                         name1 = product.get('name')
                         price = product.get('price')
                         print(f'{id} - {name1} - {price}')
+    elif option == '2':
+
+        for key in data_keys:
+            data[key] = input(f'Please enter you {key}: ')
+        client_data.append(data)
+
+        while checkout != '1':
+            id_number = int(input('Please enter the ID of the product you want to buy: '))
+            for type, brands in products.items():
+                    for brand, product_list in brands.items():
+                        for product in product_list:
+                            if id_number == product.get('id'):
+                                name1 = product.get('name')
+                                price = product.get('price')
+                                selected_product[name1] = price
+                                shopping_cart.append(selected_product)
+                                break
+            selected_product = {}
+
+            print('\nShopping cart:')
+            for item in shopping_cart:
+                for names, prices in item.items():
+                    print(names, '-', prices, '$')
+
+            checkout = input('Checkout order?\n1. Yes\n2. No\n-> ')
+
+        print('********RECEIPT********')
+
+        for client1 in client_data:
+            for k, v in client1.items():
+                print(k, ':', v)
+
+        for item in shopping_cart:
+            for names, prices in item.items():
+                print(names, '-', prices, '$')
+                total += int(prices)
+        
+        print(f'TOTAL: {total} $')
+        
+        
+        
+
+
+
         

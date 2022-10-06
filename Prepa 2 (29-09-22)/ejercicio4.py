@@ -24,23 +24,21 @@ while option != '4':
             db[key] = input(f'Please enter the {key} ')
 
         for id, inf in infraction.items():
-            print(id, inf)
+            print(id, end = '. ')
+            for k, v in inf.items():
+                print(f'{k}: {v}')
 
         type_inf = int(input('Please choose the type of infraction '))
         db['Infraction'] = infraction[type_inf]
 
         for id, inf in officers.items():
-            print(id, inf)
-
+            print(id, end = '. ')
+            for k, v in inf.items():
+                print(f'{k}: {v}')
         name_off = int(input('Please choose the officer '))
         db['Officer'] = officers[name_off]
         register.append(db)
-        print('\nThe current register is:\n')
-        for criminal in register:
-            print(register.index(criminal), end = '. \n')
-            for k, v in criminal.items():
-                print(k, ':', v)
-            print('\n')
+        print('\nData saved.')
     
         db = {}
         option = ''
@@ -50,16 +48,16 @@ while option != '4':
         for criminal in register:
             print(register.index(criminal), end = '. \n')
             for k, v in criminal.items():
-                print(k, ':', v)
+                if k == 'Infraction' or k == 'Officer':
+                    print(f'{k}:')
+                    for a, b in v.items():
+                        print (f'- {a}: {b}')
+                else:
+                    print(f'{k}: {v}')
             print('\n')
-        item_number = int(input('\nPlease enter the item you want to delete'))
+        item_number = int(input('\nPlease enter the item you want to delete: '))
         register.pop(item_number)
-        print('\nThe current register is:\n')
-        for criminal in register:
-            print(register.index(criminal), end = '. \n')
-            for k, v in criminal.items():
-                print(k, ':', v)
-            print('\n')
+        print('\nItem deleted.')
         option = ''
 
     if option == '3':
@@ -67,7 +65,12 @@ while option != '4':
         for criminal in register:
             print(register.index(criminal), end = '. \n')
             for k, v in criminal.items():
-                print(k, ':', v)
+                if k == 'Infraction' or k == 'Officer':
+                    print(f'{k}:')
+                    for a, b in v.items():
+                        print (f'- {a}: {b}')
+                else:
+                    print(f'{k}: {v}')
             print('\n')
         option = ''
 
