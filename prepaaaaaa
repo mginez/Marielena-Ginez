@@ -1,0 +1,32 @@
+student_dict = {}
+students = []
+key_list = ['ID', 'Middle School Grades','High School Grades']
+
+def get_student_data():
+    for key in key_list:
+        student_dict[key] = input(f'Please enter the {key} ')
+        
+def assign_trimester(get_student_data):
+    acum = 0
+    promedio = 0
+    for key, value in student_dict.items():
+        if key == 'Middle School Grades' or key == 'High School Grades':
+            acum += int(value)
+            average = acum / 2
+    student_dict['Average'] = average
+    if average >= 18:
+        student_dict['Trimester'] = 2
+    elif average <= 12:
+        student_dict['Trimester'] = 1
+    else:
+        student_dict['Trimester'] = 'Rechazado'
+    return student_dict        
+                
+
+
+def main():
+    while True:
+        student = get_student_data()
+        trimester = assign_trimester(student)
+        print(trimester)
+main()
