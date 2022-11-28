@@ -20,24 +20,20 @@ def get_discount(studies_dictionary, client_dictionary, client_number):
             total += studies_dictionary[key]['price']
     if client_dictionary.get('Gender (M or F)').upper() == 'F' and int(client_dictionary.get('Age')) > 55:
         discount += total * 0.25
-    elif client_dictionary.get('Gender (M or F)').upper() == 'F' and int(client_dictionary.get('Age')) > 65:
+    elif client_dictionary.get('Gender (M or F)').upper() == 'M' and int(client_dictionary.get('Age')) > 65:
         discount += total * 0.25
     if client_number %2 != 0:
         discount += total * 0.02
     total -= discount
     return total, discount
 
-def print_receipt(client_dictionary, total):
+def print_receipt(client_dictionary, total, studies_dictionary):
     print('\n***** RECEIPT ******\n')
     for key, value in client_dictionary.items():
-        if value != 'U' and value != 'R' and value != 'T':
+        if key != 'Study':
             print(f'{key}: {value}')
-        elif value == 'U':
-            print(f'{key}: Ultrasonido')
-        elif value == 'T':
-            print(f'{key}: Tomografia')
-        elif value == 'R':
-            print(f'{key}: Radiografia')
+        else:
+            print(f'{key}:', studies_dictionary[value]['name'])
     print(f'TOTAL: {total}')
 
 def get_study_totals(study_count_dictionary, client_dictionary, total):
@@ -60,7 +56,7 @@ def get_averages(client_average, total_net_amount, client_number, study_count_di
             study_average[key] = 0
     return client_average, study_average
 
-def print_final_data(client_number, total_net_amount, total_discount, client_average, study_average):
+def print_final_data(client_number, total_net_amount, total_discount, client_average, study_average, studies_dictionary):
     print('\n***** END OF THE DAY DATA ******\n')
     print(f'Total Clients: {client_number}')
     print(f'Total Net Amount: {total_net_amount}')
@@ -68,7 +64,7 @@ def print_final_data(client_number, total_net_amount, total_discount, client_ave
     print(f'Average Net Amount: {client_average}')
     print(f'Average Net Amount per Study:')
     for key, value in study_average.items():
-        print(f'- {key}: {value}')
+        print('-', studies_dictionary[key]['name'], f': {value}')
     print('')
 
 def main():   
@@ -112,13 +108,13 @@ def main():
         print_studies(studies_dict)
         client_dict = get_client_data(key_list, client_dict)
         total, discount = get_discount(studies_dict, client_dict, client_count)
-        print_receipt(client_dict, total)
+        print_receipt(client_dict, total, studies_dict)
         get_study_totals(client_study_count, client_dict, total)
         client_study_count = get_study_totals(client_study_count, client_dict, total)
         total_net_amount, total_discount = get_total_amounts(total, total_net_amount, discount, total_discount)
         client_average, study_average = get_averages(client_average, total_net_amount, client_count, client_study_count, study_average)
         if input('\nDo you want to continue (Y or N): ') == 'N':
             break
-    print_final_data(client_count, total_net_amount, total_discount, client_average, study_average)
+    print_final_data(client_count, total_net_amount, total_discount, client_average, study_average, studies_dict)
 
 main()

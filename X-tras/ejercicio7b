@@ -1,0 +1,12 @@
+words = input('Please enter the words separated by commas: ')
+word_list = words.split(',')
+reference_word = word_list[0]
+prefix=''
+
+for word in word_list[1:]:
+    while word[:len(reference_word)] != reference_word:
+        reference_word=reference_word[:len(reference_word)-1]
+
+prefix = reference_word
+
+print(prefix)
