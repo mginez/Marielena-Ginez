@@ -1,0 +1,53 @@
+from Product import Product, Food, Drink
+from Client import Client
+
+
+def main():
+    option = 0
+    order = ''
+    db = {
+        'Product': [],
+        'Client': ''
+    }
+
+    while True:
+        if input('Do you want to continue? Y or N') =='Y':
+            option = int(input('Do you want to order food or a drink\n1.Food\n2.Drink\n->'))
+            
+            if option == 1:
+                order = Food(
+                            input('Name: '),
+                            input('Price: '),
+                            input('Type: '),
+                            input('Course: ')
+                        )
+
+                db['Product'].append(Food.get_order(order)) 
+
+                print(db)
+            
+            elif option == 2:
+                order = Drink(
+                            input('Name: '),
+                            input('Price: '),
+                            input('Alcohol %: '),
+                            input('Temperature: ')
+                        )
+
+                db['Product'].append(Drink.get_order(order)) 
+
+                print(db)
+
+            client = Client(
+                input('Name: '),
+                input('Lastname: '),
+                input('Date of Birth: '),
+                input('ID: '),
+                input('Check: ')
+            )
+
+        else:
+            db['Client'] += Client.get_client(client)
+            print(db)
+            break
+main()
